@@ -7,10 +7,11 @@ import java.util.Optional;
 public class Shelf {
 
     private final Product pattern;
-
+    private final int number;
     private int quantity;
 
-    public Shelf(Product productType, int quantity) {
+    public Shelf(int number, Product productType, int quantity) {
+        this.number = number;
         this.pattern = productType;
         this.quantity = quantity;
     }
@@ -31,4 +32,7 @@ public class Shelf {
         return pattern.getPrice();
     }
 
+    public int getShelfNumber() {
+        return number;
+    }
 }

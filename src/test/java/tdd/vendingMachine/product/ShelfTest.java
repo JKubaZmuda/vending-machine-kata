@@ -10,7 +10,7 @@ public class ShelfTest {
     @Test
     public void shouldObtainProjectForSufficientSupply() {
         //given
-        Shelf shelf = new Shelf(dummyProduct(), 2);
+        Shelf shelf = new Shelf(1, dummyProduct(), 2);
         //when
         //then
         assertThat(shelf.obtainProduct()).isPresent();
@@ -20,7 +20,7 @@ public class ShelfTest {
     @Test
     public void shouldObtainNoProductForInsufficientSupplies() {
         //given
-        Shelf shelf = new Shelf(dummyProduct(), 1);
+        Shelf shelf = new Shelf(1, dummyProduct(), 1);
         //when
         shelf.obtainProduct();
         //then
