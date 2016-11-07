@@ -1,9 +1,9 @@
-package tdd.vendingMachine;
+package tdd.vendingMachine.engine;
 
+import tdd.vendingMachine.engine.result.BuyResult;
 import tdd.vendingMachine.money.coin.Coin;
 import tdd.vendingMachine.money.unit.MoneyUnit;
 import tdd.vendingMachine.product.Shelf;
-import tdd.vendingMachine.result.BuyResult;
 
 import java.util.List;
 import java.util.Map;
@@ -17,10 +17,9 @@ public interface VendingMachine {
 
     MoneyUnit getBalance();
 
-    boolean isAbleToEject(MoneyUnit amount);
-
     Map<Coin, Integer> cancel();
 
-    Optional<BuyResult> buy(int shelfNumber);
+    BuyResult buy(int shelfNumber);
 
+    Optional<Shelf> getShelfByNumber(int shelfNumber);
 }
