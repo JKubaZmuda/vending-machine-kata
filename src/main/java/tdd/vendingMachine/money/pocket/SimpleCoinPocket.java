@@ -39,6 +39,11 @@ public class SimpleCoinPocket implements CoinPocket {
         return insertedMoney;
     }
 
+    @Override
+    public boolean isAbleToEject(MoneyUnit amount) {
+        return storage.isAbleToWithdraw(amount);
+    }
+
     public void setStorage(CoinStorage storage) {
         this.storage = storage;
     }

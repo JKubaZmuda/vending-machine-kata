@@ -26,13 +26,6 @@ public class CoinStorageTest {
         this.result = testCase.getResult();
     }
 
-    @Test
-    public void parameterizedTest() {
-        Optional<Map<Coin, Integer>> withdrawn = coinStorage.withdraw(amount);
-        assertThat(withdrawn.isPresent()).isEqualTo(result);
-        assertThat(withdrawn.map(Map::values).map(this::sum).orElse(0)).isEqualTo(numberOfCoins);
-    }
-
     @Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
@@ -118,6 +111,24 @@ public class CoinStorageTest {
                     .result(false)
             }
         });
+    }
+
+    @Test
+    public void shouldShowIfAbleOrNotAbleToWithdraw() {
+        //given
+        //when
+        //then
+        assertThat(coinStorage.isAbleToWithdraw(amount)).isEqualTo(result);
+    }
+
+    @Test
+    public void shouldCorrectlyWithdrawCoins() {
+        //given
+        Optional<Map<Coin, Integer>> withdrawn = coinStorage.withdraw(amount);
+        //when
+        //then
+        assertThat(withdrawn.isPresent()).isEqualTo(result);
+        assertThat(withdrawn.map(Map::values).map(this::sum).orElse(0)).isEqualTo(numberOfCoins);
     }
 
     private int sum(Iterable<Integer> toSum) {

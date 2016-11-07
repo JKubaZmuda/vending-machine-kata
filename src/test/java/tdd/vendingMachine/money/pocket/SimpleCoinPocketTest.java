@@ -75,15 +75,37 @@ public class SimpleCoinPocketTest {
         assertThat(coinPocket.ejectMoney(new MoneyUnit("0.1"))).isEmpty();
     }
 
+    @Test
+    public void shouldShowThatItsUnableToWithdraw() {
+        //given
+        SimpleCoinPocket coinPocket = new SimpleCoinPocket();
+        //when
+        coinPocket.setStorage(spyFailedWithdraw());
+        //then
+        assertThat(coinPocket.isAbleToEject(new MoneyUnit("20"))).isFalse();
+    }
+
+    @Test
+    public void shouldShowThatItsAbleToWithdraw() {
+        //given
+        SimpleCoinPocket coinPocket = new SimpleCoinPocket();
+        //when
+        coinPocket.setStorage(spySuccessfulWithdraw());
+        //then
+        assertThat(coinPocket.isAbleToEject(new MoneyUnit("20"))).isTrue();
+    }
+
     private CoinStorage spyFailedWithdraw() {
         CoinStorage spyStorage = spy(CoinStorage.class);
         doReturn(Optional.empty()).when(spyStorage).withdraw(any());
+        doReturn(false).when(spyStorage).isAbleToWithdraw(any());
         return spyStorage;
     }
 
     private CoinStorage spySuccessfulWithdraw() {
         CoinStorage spyStorage = spy(CoinStorage.class);
         doReturn(Optional.of(new HashMap<>())).when(spyStorage).withdraw(any());
+        doReturn(true).when(spyStorage).isAbleToWithdraw(any());
         return spyStorage;
     }
 

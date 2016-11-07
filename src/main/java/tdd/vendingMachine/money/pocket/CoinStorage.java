@@ -23,6 +23,16 @@ public class CoinStorage {
         storage.put(coin, incrementCoinQuantity(coin));
     }
 
+    public boolean isAbleToWithdraw(MoneyUnit amount) {
+        List<Map<Coin, Integer>> sortedCombinations = obtainCoinCombinations(amount).stream().sorted(compareByNumberOfCoinsAscending()).collect(Collectors.toList());
+        for (Map<Coin, Integer> entry : sortedCombinations) {
+            if (isStorageOwningCoins(entry)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Optional<Map<Coin, Integer>> withdraw(MoneyUnit amount) {
         List<Map<Coin, Integer>> sortedCombinations = obtainCoinCombinations(amount).stream().sorted(compareByNumberOfCoinsAscending()).collect(Collectors.toList());
 

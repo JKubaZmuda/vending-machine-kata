@@ -12,5 +12,7 @@ public interface CoinPocket {
 
     MoneyUnit getInsertedMoney();
 
+    boolean isAbleToEject(MoneyUnit amount);
+
     Optional<Map<Coin, Integer>> ejectMoney(MoneyUnit amount);
 }
