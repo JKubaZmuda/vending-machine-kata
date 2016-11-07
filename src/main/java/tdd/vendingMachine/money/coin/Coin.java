@@ -39,6 +39,11 @@ public enum Coin {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Coin [" + value.toString() + "]";
+    }
+
     public MoneyUnit getMoneyValue() {
         return value;
     }
