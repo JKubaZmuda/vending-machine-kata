@@ -115,6 +115,30 @@ public class VendingMachineEngineTest {
         assertThat(numberOfEjectedCoins).isGreaterThan(0);
     }
 
+    @Test
+    public void shouldGetShelfFromList() {
+        //given
+        List<Shelf> shelves = new ArrayList<>();
+        shelves.add(new Shelf(2, dummyProduct(), 1));
+
+        VendingMachineEngine vendingMachineEngine = new VendingMachineEngine(mockAbleToEjectPocket(), shelves);
+        //when
+        //then
+        assertThat(vendingMachineEngine.getShelfByNumber(2)).isPresent();
+    }
+
+    @Test
+    public void shouldNotGetShelfFromList() {
+        //given
+        List<Shelf> shelves = new ArrayList<>();
+        shelves.add(new Shelf(2, dummyProduct(), 1));
+
+        VendingMachineEngine vendingMachineEngine = new VendingMachineEngine(mockAbleToEjectPocket(), shelves);
+        //when
+        //then
+        assertThat(vendingMachineEngine.getShelfByNumber(3)).isEmpty();
+    }
+
     public Product dummyProduct() {
         return new Product("dummy", new MoneyUnit("10"));
     }
