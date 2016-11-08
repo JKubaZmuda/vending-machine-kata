@@ -35,4 +35,8 @@ public class Shelf {
     public int getShelfNumber() {
         return number;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }

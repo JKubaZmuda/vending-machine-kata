@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class VendingMachineEngine implements VendingMachine {
 
-    public static final String WRONG_SHELF_NUMBER = "Wrong shell number.";
+    public static final String WRONG_SHELF_NUMBER = "Wrong shelf number.";
     public static final String UNABLE_TO_EJECT_CHANGE = "Unable to eject change.";
     public static final String NO_SUCH_PRODUCTS_LEFT = "There are no such products left.";
     public static final String INSUFFICIENT_FUNDS = "Inserted not enough money.";
@@ -78,6 +78,10 @@ public class VendingMachineEngine implements VendingMachine {
         }
 
         Map<Coin, Integer> actualChange = coinPocket.ejectMoney(potentialChange).orElseThrow(IllegalStateException::new);
+
+        if (shelf.getQuantity() <= 0) {
+            shelves.remove(shelf);
+        }
 
         return new BuyResult(true, SUCCESS, product.get(), actualChange);
     }

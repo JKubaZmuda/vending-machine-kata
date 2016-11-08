@@ -20,9 +20,10 @@ public class VendingMachineEngineTest {
     @Test
     public void shouldEjectInsertedMoneyWhenCancelled() {
         //given
-        CoinPocket mockPocket = mockAbleToEjectPocket();
         Map<Coin, Integer> change = new HashMap<>();
         change.put(Coin.COIN_50, 1);
+
+        CoinPocket mockPocket = mockAbleToEjectPocket();
         when(mockPocket.ejectMoney(new MoneyUnit("0.5"))).thenReturn(Optional.of(change));
         when(mockPocket.getInsertedMoney()).thenReturn(new MoneyUnit("0.5"));
 
@@ -39,6 +40,7 @@ public class VendingMachineEngineTest {
         List<Shelf> shelves = new ArrayList<>();
         shelves.add(new Shelf(1, dummyProduct(), 1));
         shelves.add(new Shelf(2, dummyProduct(), 1));
+
         VendingMachineEngine vendingMachine = new VendingMachineEngine(mockAbleToEjectPocket(), shelves);
         //when
         //then
@@ -52,8 +54,10 @@ public class VendingMachineEngineTest {
         //given
         List<Shelf> shelves = new ArrayList<>();
         shelves.add(new Shelf(1, productCosting("0.5"), 1));
+
         CoinPocket mockPocket = mockAbleToEjectPocket();
         when(mockPocket.getInsertedMoney()).thenReturn(new MoneyUnit("0.4"));
+
         VendingMachineEngine vendingMachineEngine = new VendingMachineEngine(mockPocket, shelves);
         //when
         //then
@@ -87,6 +91,7 @@ public class VendingMachineEngineTest {
 
         CoinPocket mockPocket = mockUnableToEjectPocket();
         when(mockPocket.getInsertedMoney()).thenReturn(new MoneyUnit("20"));
+
         VendingMachineEngine vendingMachineEngine = new VendingMachineEngine(mockPocket, shelves);
         //when
         //then
@@ -106,6 +111,7 @@ public class VendingMachineEngineTest {
         change.put(Coin.COIN_10, 45);
         when(mockPocket.ejectMoney(any())).thenReturn(Optional.of(change));
         when(mockPocket.getInsertedMoney()).thenReturn(new MoneyUnit("10"));
+
         VendingMachineEngine vendingMachineEngine = new VendingMachineEngine(mockPocket, shelves);
         //when
         //then
@@ -139,12 +145,35 @@ public class VendingMachineEngineTest {
         assertThat(vendingMachineEngine.getShelfByNumber(3)).isEmpty();
     }
 
+    @Test
+    public void shouldRemoveEmptyShelf() {
+        //given
+        List<Shelf> shelves = new ArrayList<>();
+        shelves.add(new Shelf(1, dummyProduct(), 1));
+
+        VendingMachineEngine vendingMachineEngine = new VendingMachineEngine(mockFullSuccessPocket(), shelves);
+        //when
+        vendingMachineEngine.buy(1);
+        //then
+        assertThat(vendingMachineEngine.getShelves()).isEmpty();
+    }
+
     public Product dummyProduct() {
         return new Product("dummy", new MoneyUnit("10"));
     }
 
     public Product productCosting(String cost) {
         return new Product("someSnack", new MoneyUnit(cost));
+    }
+
+    public CoinPocket mockFullSuccessPocket() {
+        CoinPocket mockPocket = mock(CoinPocket.class);
+        when(mockPocket.isAbleToEject(any())).thenReturn(true);
+        when(mockPocket.getInsertedMoney()).thenReturn(new MoneyUnit("100"));
+        HashMap<Coin, Integer> change = new HashMap<>();
+        change.put(Coin.COIN_20, 10);
+        when(mockPocket.ejectMoney(any())).thenReturn(Optional.of(change));
+        return mockPocket;
     }
 
     public CoinPocket mockAbleToEjectPocket() {
