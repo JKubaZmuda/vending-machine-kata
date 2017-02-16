@@ -80,7 +80,7 @@ public class VendingMachineEngineTest {
         //then
         BuyResult result = vendingMachineEngine.buy(1);
         assertThat(result.isSuccess()).isFalse();
-        assertThat(result.getMessage()).isEqualTo(VendingMachineEngine.NO_SUCH_PRODUCTS_LEFT);
+        assertThat(result.getMessage()).isEqualTo(VendingMachineEngine.WRONG_SHELF_NUMBER);
     }
 
     @Test
