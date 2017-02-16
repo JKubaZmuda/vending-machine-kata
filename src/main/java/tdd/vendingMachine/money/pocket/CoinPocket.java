@@ -12,6 +12,8 @@ public interface CoinPocket {
 
     MoneyUnit getInsertedMoney();
 
+    void resetInsertedMoney();
+
     boolean isAbleToEject(MoneyUnit amount);
 
     Optional<Map<Coin, Integer>> ejectMoney(MoneyUnit amount);

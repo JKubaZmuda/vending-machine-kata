@@ -78,6 +78,7 @@ public class VendingMachineEngine implements VendingMachine {
         }
 
         Map<Coin, Integer> actualChange = coinPocket.ejectMoney(potentialChange).orElseThrow(IllegalStateException::new);
+        coinPocket.resetInsertedMoney();
 
         if (shelf.getQuantity() <= 0) {
             shelves.remove(shelf);
