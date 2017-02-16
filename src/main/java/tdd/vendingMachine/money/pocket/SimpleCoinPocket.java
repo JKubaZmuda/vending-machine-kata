@@ -24,7 +24,7 @@ public class SimpleCoinPocket implements CoinPocket {
         storage.store(coin);
         insertedMoney = insertedMoney.sum(coin.getMoneyValue());
     }
-1
+
     @Override
     public Optional<Map<Coin, Integer>> ejectMoney(MoneyUnit amount) {
         Optional<Map<Coin, Integer>> withdrawnCoins = storage.withdraw(amount);
